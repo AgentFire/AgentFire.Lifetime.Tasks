@@ -3,22 +3,24 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageLicenseFile>llicense.txt</PackageLicenseFile>
+    <PackageLicenseFile>License.txt</PackageLicenseFile>
     <Description>Some useful instruments. For me.</Description>
     <PackageProjectUrl>https://github.com/AgentFire/AgentFire.Lifetime.Tasks</PackageProjectUrl>
     <RepositoryUrl>https://github.com/AgentFire/AgentFire.Lifetime.Tasks</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
-    <PackageTags>tasks agentfire concurrent</PackageTags>
+    <PackageTags>tasks agentfire concurrent foreach</PackageTags>
     <PackageReleaseNotes>First release.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="llicense.txt" />
-    <None Remove="llicense.txt" />
-    <None Include="llicense.txt">
+    <None Include="License.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nito.AsyncEx.Coordination" Version="5.0.0" />
   </ItemGroup>
 
 </Project>

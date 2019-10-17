@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentFire.Lifetime.Tasks", "AgentFire.Lifetime.Tasks\AgentFire.Lifetime.Tasks.csproj", "{E8C09849-2CF8-4F62-AC5A-990F6F7C462B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgentFire.Lifetime.Tasks", "AgentFire.Lifetime.Tasks\AgentFire.Lifetime.Tasks.csproj", "{E8C09849-2CF8-4F62-AC5A-990F6F7C462B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{09C0FDBD-5EA0-452F-9C09-9F5203B16D79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{E8C09849-2CF8-4F62-AC5A-990F6F7C462B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8C09849-2CF8-4F62-AC5A-990F6F7C462B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8C09849-2CF8-4F62-AC5A-990F6F7C462B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09C0FDBD-5EA0-452F-9C09-9F5203B16D79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09C0FDBD-5EA0-452F-9C09-9F5203B16D79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09C0FDBD-5EA0-452F-9C09-9F5203B16D79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09C0FDBD-5EA0-452F-9C09-9F5203B16D79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
