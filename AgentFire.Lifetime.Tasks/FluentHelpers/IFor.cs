@@ -4,8 +4,12 @@ using System.Threading.Tasks;
 
 namespace AgentFire.Lifetime.Tasks.FluentHelpers
 {
+    /// <summary />
     public interface IFor<T> : IFluentInterface
     {
-        IBuilderWithInitialDegreeOfParallelismWhenException<T> Each(Func<T, CancellationToken, Task> method);
+        /// <summary>
+        /// Specify your main processor method.
+        /// </summary>
+        IBuilderWithInitialDegreeOfParallelismWhenException<T> Each(MethodProcessor<T> method);
     }
 }

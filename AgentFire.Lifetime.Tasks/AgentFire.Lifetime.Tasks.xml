@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AgentFire.Lifetime.Tasks</name>
+    </assembly>
+    <members>
+        <member name="T:AgentFire.Lifetime.Tasks.Builder">
+            <summary>
+            The builder Builder for ForEach.
+            </summary>
+        </member>
+        <member name="M:AgentFire.Lifetime.Tasks.Builder.For``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="collection"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AgentFire.Lifetime.Tasks.AsyncExceptionHandler`1">
+            <summary>
+            Your exception handler.
+            </summary>
+        </member>
+        <member name="T:AgentFire.Lifetime.Tasks.SyncExceptionHandler`1">
+            <summary>
+            Your exception handler.
+            </summary>
+        </member>
+        <member name="T:AgentFire.Lifetime.Tasks.ExceptionResolution">
+            <summary>
+            Defines a way to stop <see cref="M:AgentFire.Lifetime.Tasks.ForEach`1.Run(System.Threading.CancellationToken)"/> execution.
+            </summary>
+            <remarks>
+            For some tasty Retry behaviours, see Polly nuget package.
+            </remarks>
+        </member>
+        <member name="F:AgentFire.Lifetime.Tasks.ExceptionResolution.Swallow">
+            <summary>
+            The exception is swallowed, the method continues running.
+            </summary>
+        </member>
+        <member name="F:AgentFire.Lifetime.Tasks.ExceptionResolution.SoftStop">
+            <summary>
+            No new tasks are to be created, all running are awaited to finish.
+            </summary>
+        </member>
+        <member name="F:AgentFire.Lifetime.Tasks.ExceptionResolution.HardStop">
+            <summary>
+            No new tasks are to be created, all running are cancelled and awaited to finish.
+            </summary>
+        </member>
+        <member name="F:AgentFire.Lifetime.Tasks.ExceptionResolution.Forget">
+            <summary>
+            No new tasks are to be created, all running are cancelled and NOT awaited to finish.
+            </summary>
+        </member>
+        <member name="F:AgentFire.Lifetime.Tasks.ExceptionResolution.Abandon">
+            <summary>
+            No new tasks are to be created, all running are NOT cancelled and NOT awaited to finish.
+            </summary>
+        </member>
+        <member name="T:AgentFire.Lifetime.Tasks.FluentHelpers.IBuilder`1">
+            <summary />
+        </member>
+        <member name="M:AgentFire.Lifetime.Tasks.FluentHelpers.IBuilder`1.Build">
+            <summary>
+            Builds the <see cref="T:AgentFire.Lifetime.Tasks.ForEach`1"/> instance.
+            </summary>
+        </member>
+        <member name="T:AgentFire.Lifetime.Tasks.FluentHelpers.IBuilderWithInitialDegreeOfParallelismWhenException`1">
+            <summary />
+        </member>
+        <member name="T:AgentFire.Lifetime.Tasks.FluentHelpers.IFluentInterface">
+            <summary>
+            Source: http://blogs.clariusconsulting.net/kzu/how-to-hide-system-object-members-from-your-interfaces/
+            </summary>
+        </member>
+        <member name="M:AgentFire.Lifetime.Tasks.FluentHelpers.IFluentInterface.GetType">
+            <summary>
+            Redeclaration that hides the <see cref="M:System.Object.GetType"/> method from IntelliSense.
+            </summary>
+        </member>
+        <member name="M:AgentFire.Lifetime.Tasks.FluentHelpers.IFluentInterface.GetHashCode">
+            <summary>
+            Redeclaration that hides the <see cref="M:System.Object.GetHashCode"/> method from IntelliSense.
+            </summary>
+        </member>
+        <member name="M:AgentFire.Lifetime.Tasks.FluentHelpers.IFluentInterface.ToString">
+            <summary>
+            Redeclaration that hides the <see cref="M:System.Object.ToString"/> method from IntelliSense.
+            </summary>
+        </member>
+        <member name="M:AgentFire.Lifetime.Tasks.FluentHelpers.IFluentInterface.Equals(System.Object)">
+            <summary>
+            Redeclaration that hides the <see cref="M:System.Object.Equals(System.Object)"/> method from IntelliSense.
+            </summary>
+        </member>
+        <member name="T:AgentFire.Lifetime.Tasks.FluentHelpers.IFor`1">
+            <summary />
+        </member>
+        <member name="M:AgentFire.Lifetime.Tasks.FluentHelpers.IFor`1.Each(AgentFire.Lifetime.Tasks.MethodProcessor{`0})">
+            <summary>
+            Specify your main processor method.
+            </summary>
+        </member>
+        <member name="T:AgentFire.Lifetime.Tasks.FluentHelpers.IWhenException`1">
+            <summary />
+        </member>
+        <member name="T:AgentFire.Lifetime.Tasks.FluentHelpers.IWhenExceptionHelper`2">
+            <summary />
+        </member>
+        <member name="M:AgentFire.Lifetime.Tasks.FluentHelpers.IWhenExceptionHelper`2.WhenExceptionAsync(AgentFire.Lifetime.Tasks.AsyncExceptionHandler{`1})">
+            <summary>
+            Specify your asynchronous exception handler. The <see cref="T:System.Threading.CancellationToken"/> is triggered when there is no need to handle the exception any longer.
+            </summary>
+        </member>
+        <member name="M:AgentFire.Lifetime.Tasks.FluentHelpers.IWhenExceptionHelper`2.WhenException(AgentFire.Lifetime.Tasks.SyncExceptionHandler{`1})">
+            <summary>
+            Specify your synchronous exception handler.
+            </summary>
+        </member>
+        <member name="T:AgentFire.Lifetime.Tasks.FluentHelpers.IWithInitialDegreeOfParallelism`1">
+            <summary />
+        </member>
+        <member name="T:AgentFire.Lifetime.Tasks.FluentHelpers.IWithInitialDegreeOfParallelismHelper`2">
+            <summary />
+        </member>
+        <member name="M:AgentFire.Lifetime.Tasks.FluentHelpers.IWithInitialDegreeOfParallelismHelper`2.WithInitialDegreeOfParallelism(System.Int32)">
+            <summary>
+            Specify your initial simultaneous tasks cound during iteration.
+            </summary>
+        </member>
+        <member name="T:AgentFire.Lifetime.Tasks.ForEach`1">
+            <summary>
+            Your async iterator.
+            </summary>
+        </member>
+        <member name="P:AgentFire.Lifetime.Tasks.ForEach`1.CurrentDegreeOfParallelism">
+            <summary>
+            Gets (can be changed in mid-process) a value of how many tasks are run at any given point of time.
+            </summary>
+        </member>
+        <member name="P:AgentFire.Lifetime.Tasks.ForEach`1.RunStats">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AgentFire.Lifetime.Tasks.ForEach`1.SetParallelism(System.Int32)">
+            <summary>
+            Sets the maximum number of simultaneous tasks.
+            This method is thread-safe.
+            </summary>
+            <param name="value">More than 0.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+            <exception cref="T:System.InvalidOperationException" />
+        </member>
+        <member name="M:AgentFire.Lifetime.Tasks.ForEach`1.IncreaseParallelism(System.Int32)">
+            <summary>
+            Increases the maximum number of simultaneous tasks.
+            This method is thread-safe.
+            </summary>
+            <param name="count">More than 0.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+            <exception cref="T:System.InvalidOperationException" />
+        </member>
+        <member name="M:AgentFire.Lifetime.Tasks.ForEach`1.DecreaseParallelism(System.Int32)">
+            <summary>
+            Decreases the maximum number of simultaneous tasks. Excess tasks are safely awaited to finish.
+            This method is thread-safe.
+            </summary>
+            <param name="count">More than 0.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+            <exception cref="T:System.InvalidOperationException" />
+        </member>
+        <member name="M:AgentFire.Lifetime.Tasks.ForEach`1.Run(System.Threading.CancellationToken)">
+            <summary>
+            Main thingy.
+            </summary>
+            <remarks>
+            This method will not run in parallel with itself.
+            </remarks>
+            <exception cref="T:System.AggregateException">
+            Thrown when: An exception occurs on your processor method and: Either (1) your ExceptionHandler throws an exception, or (2) you did not provide ExceptionHandler.
+            </exception>
+            <exception cref="T:System.OperationCanceledException">
+            Thrown when: your <see cref="T:System.Threading.CancellationToken"/> is triggered..
+            </exception>
+            <exception cref="T:System.InvalidOperationException">
+            Thrown when: you attempt to run this method in parallel.
+            Or: the main <see cref="T:System.Collections.Generic.IEnumerable`1"/> collection was modified in mid-iteration.
+            </exception>
+        </member>
+        <member name="T:AgentFire.Lifetime.Tasks.MethodProcessor`1">
+            <summary>
+            Your main processor
+            </summary>
+        </member>
+        <member name="F:AgentFire.Lifetime.Tasks.RunResult.Finished">
+            <summary>
+            All operations completed.
+            </summary>
+        </member>
+        <member name="F:AgentFire.Lifetime.Tasks.RunResult.Interrupted">
+            <summary>
+            One or more operations returned <see cref="F:AgentFire.Lifetime.Tasks.ExceptionResolution.SoftStop"/> or higher in their ExceptionHandler, which resulted in cancellation.
+            </summary>
+        </member>
+        <member name="T:AgentFire.Lifetime.Tasks.Tools.AsyncCounterGate">
+            <summary>
+            An async gate that allows some fixed amount of users to pass thru. Not very many-awaiters-friendly.
+            </summary>
+        </member>
+    </members>
+</doc>

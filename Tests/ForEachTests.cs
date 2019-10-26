@@ -32,6 +32,7 @@ namespace Tests
             var e = b.Each((_, __) => Task.CompletedTask);
 
             Assert.ThrowsException<ArgumentNullException>(() => e.WhenException(null));
+            Assert.ThrowsException<ArgumentNullException>(() => e.WhenExceptionAsync(null));
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => e.WithInitialDegreeOfParallelism(0));
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => e.WithInitialDegreeOfParallelism(-1));
 
@@ -97,7 +98,7 @@ namespace Tests
                 .WhenException((T, ex) =>
                 {
                     Interlocked.Increment(ref swallowed);
-                    return Task.FromResult(ExceptionResolution.Swallow);
+                    return ExceptionResolution.Swallow;
                 })
                 .Build();
 
@@ -157,10 +158,7 @@ namespace Tests
                     return Task.Delay(100, token);
                 })
                 .WithInitialDegreeOfParallelism(10)
-                .WhenException((T, ex) =>
-                {
-                    return Task.FromResult(ExceptionResolution.SoftStop);
-                })
+                .WhenException((T, ex) => ExceptionResolution.SoftStop)
                 .Build();
 
             RunResult result = await _forEach.Run(CancellationToken.None);
@@ -197,7 +195,7 @@ namespace Tests
                 .WhenException((T, ex) =>
                 {
                     hardStop = true;
-                    return Task.FromResult(ExceptionResolution.HardStop);
+                    return ExceptionResolution.HardStop;
                 })
                 .Build();
 
@@ -230,7 +228,7 @@ namespace Tests
                     }
                 })
                 .WithInitialDegreeOfParallelism(10)
-                .WhenException((T, ex) => Task.FromResult(ExceptionResolution.Forget))
+                .WhenException((T, ex) => ExceptionResolution.Forget)
                 .Build();
 
             RunResult result = await _forEach.Run(CancellationToken.None);

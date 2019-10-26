@@ -9,7 +9,12 @@
     <RepositoryUrl>https://github.com/AgentFire/AgentFire.Lifetime.Tasks</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
     <PackageTags>tasks agentfire concurrent foreach</PackageTags>
-    <PackageReleaseNotes>First release.</PackageReleaseNotes>
+    <PackageReleaseNotes>More XML comments, some comfy things.</PackageReleaseNotes>
+    <Version>1.1</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\AgentFire\Dropbox\My NuGet Packages\AgentFire.Lifetime.Tasks\AgentFire.Lifetime.Tasks\AgentFire.Lifetime.Tasks.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ConfigureAwaitChecker.Analyzer" Version="4.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Nito.AsyncEx.Coordination" Version="5.0.0" />
   </ItemGroup>
 

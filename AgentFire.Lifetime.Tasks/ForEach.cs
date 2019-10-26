@@ -1,6 +1,5 @@
 ﻿using AgentFire.Lifetime.Tasks.Tools;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -8,14 +7,17 @@ using System.Threading.Tasks;
 
 namespace AgentFire.Lifetime.Tasks
 {
+    /// <summary>
+    /// Your async iterator.
+    /// </summary>
     public sealed class ForEach<T>
     {
         // TODO: Make more sync roots, but that takes a bigger brain.
         private readonly object _syncRoot = new object();
 
         private readonly IEnumerable<T> _collection;
-        private readonly Func<T, CancellationToken, Task> _method;
-        private readonly Func<T, Exception, Task<ExceptionResolution>> _exceptionHandler;
+        private readonly MethodProcessor<T> _method;
+        private readonly AsyncExceptionHandler<T> _exceptionHandler;
 
         private readonly AsyncCounterGate _gate;
 
@@ -25,8 +27,35 @@ namespace AgentFire.Lifetime.Tasks
         public int CurrentDegreeOfParallelism => _gate.Maximum;
 
         private readonly RunStatsImpl _stats = new RunStatsImpl();
+
+        /// <summary>
+        /// 
+        /// </summary>
         public IRunStatistics RunStats => _stats;
 
+        /// <summary>
+        /// Sets the maximum number of simultaneous tasks.
+        /// This method is thread-safe.
+        /// </summary>
+        /// <param name="value">More than 0.</param>
+        /// <exception cref="ArgumentOutOfRangeException" />
+        /// <exception cref="InvalidOperationException" />
+        public void SetParallelism(int value)
+        {
+            #region Failsafes
+
+            if (value <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value));
+            }
+
+            #endregion
+
+            lock (_syncRoot)
+            {
+                _gate.Maximum = value;
+            }
+        }
         /// <summary>
         /// Increases the maximum number of simultaneous tasks.
         /// This method is thread-safe.
@@ -97,7 +126,7 @@ namespace AgentFire.Lifetime.Tasks
 
         private readonly HashSet<WorkItem> _currentTasks = new HashSet<WorkItem>();
 
-        internal ForEach(IEnumerable<T> collection, Func<T, CancellationToken, Task> method, int initialDegreeOfParallelism, Func<T, Exception, Task<ExceptionResolution>> exceptionHandler)
+        internal ForEach(IEnumerable<T> collection, MethodProcessor<T> method, int initialDegreeOfParallelism, AsyncExceptionHandler<T> exceptionHandler)
         {
             _collection = collection;
             _method = method;
@@ -196,7 +225,7 @@ namespace AgentFire.Lifetime.Tasks
                             {
                                 try
                                 {
-                                    ExceptionResolution r = await _exceptionHandler(item, ex).ConfigureAwait(false);
+                                    ExceptionResolution r = await _exceptionHandler(item, ex, workItem.CTS.Token).ConfigureAwait(false);
 
                                     Interlocked.Increment(ref _stats._exceptionsCaught);
 
@@ -209,6 +238,10 @@ namespace AgentFire.Lifetime.Tasks
                                     {
                                         Interlocked.Increment(ref _stats._exceptionsSwallowed);
                                     }
+                                }
+                                catch (OperationCanceledException) when (workItem.CTS.Token.IsCancellationRequested)
+                                {
+                                    // Swallowed because the iteration is shutting down.
                                 }
                                 catch (Exception resEx)
                                 {

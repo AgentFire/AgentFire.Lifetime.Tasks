@@ -1,7 +1,7 @@
 ﻿namespace AgentFire.Lifetime.Tasks
 {
     /// <summary>
-    /// Defines a way to stop <see cref="ForEach.ForEachAsync"/> execution.
+    /// Defines a way to stop <see cref="ForEach{T}.Run(System.Threading.CancellationToken)"/> execution.
     /// </summary>
     /// <remarks>
     /// For some tasty Retry behaviours, see Polly nuget package.

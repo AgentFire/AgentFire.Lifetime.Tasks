@@ -1,10 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace AgentFire.Lifetime.Tasks.FluentHelpers
+﻿namespace AgentFire.Lifetime.Tasks.FluentHelpers
 {
-    public interface IWhenException<T> : IFluentInterface
+    /// <summary />
+    public interface IWhenException<T> : IFluentInterface, IWhenExceptionHelper<IBuilder<T>, T>
     {
-        IBuilder<T> WhenException(Func<T, Exception, Task<ExceptionResolution>> exceptionHandler);
     }
 }

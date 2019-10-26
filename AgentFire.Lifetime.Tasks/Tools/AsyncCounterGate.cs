@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace AgentFire.Lifetime.Tasks.Tools
 {
+    /// <summary>
+    /// An async gate that allows some fixed amount of users to pass thru. Not very many-awaiters-friendly.
+    /// </summary>
     public sealed class AsyncCounterGate
     {
         #region Releaser
