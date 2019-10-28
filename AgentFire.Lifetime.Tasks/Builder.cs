@@ -10,7 +10,15 @@ namespace AgentFire.Lifetime.Tasks
     /// </summary>
     public static class Builder
     {
-        private sealed class Impl<T> : IFor<T>, IBuilderWithInitialDegreeOfParallelismWhenException<T>, IBuilderWithInitialDegreeOfParallelism<T>, IBuilderWhenException<T>, IBuilder<T>, IWithInitialDegreeOfParallelism<T>, IWhenException<T>, IFluentInterface
+        private sealed class Impl<T> :
+            IFor<T>,
+            IBuilderWithInitialDegreeOfParallelismWhenException<T>,
+            IBuilderWithInitialDegreeOfParallelism<T>,
+            IBuilderWhenException<T>,
+            IBuilder<T>,
+            IWithInitialDegreeOfParallelism<T>,
+            IWhenException<T>,
+            IFluentInterface
         {
             public IEnumerable<T> Collection { get; }
             public MethodProcessor<T> Method { get; private set; }

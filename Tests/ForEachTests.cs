@@ -72,19 +72,52 @@ namespace Tests
         [TestMethod]
         public async Task BasicCancellation()
         {
+            int started = 0;
+
             ForEach<int> _forEach = Builder
-                .For(new int[] { 1, 2 })
-                .Each((T, token) => Task.Delay(T * 1000, token))
+                .For(new int[] { 1, 2, 3, 4, 5 })
+                .Each(async (T, token) =>
+                {
+                    try
+                    {
+                        Interlocked.Increment(ref started);
+                        await Task.Delay(1000, token);
+                    }
+                    finally
+                    {
+                        Assert.IsTrue(token.IsCancellationRequested);
+                    }
+
+                    Assert.Fail();
+                })
+                .WithInitialDegreeOfParallelism(4)
+                .WhenException((_, ex) =>
+                {
+                    Assert.Fail();
+                    throw new AssertFailedException();
+                })
                 .Build();
 
             using (CancellationTokenSource cts = new CancellationTokenSource())
             {
                 cts.CancelAfter(500);
 
-                TaskCanceledException ex = await Assert.ThrowsExceptionAsync<TaskCanceledException>(() => _forEach.Run(cts.Token));
-
-                Assert.AreEqual(ex.CancellationToken, cts.Token);
+                try
+                {
+                    await _forEach.Run(cts.Token);
+                    Assert.Fail();
+                }
+                catch (OperationCanceledException ex)
+                {
+                    Assert.AreEqual(ex.CancellationToken, cts.Token);
+                }
+                catch (Exception)
+                {
+                    Assert.Fail();
+                }
             }
+
+            Assert.AreEqual(_forEach.CurrentDegreeOfParallelism, started);
         }
 
         [TestMethod]
@@ -343,6 +376,38 @@ namespace Tests
             await Task.WhenAll(t1, t2, t3);
 
             Assert.AreEqual(56, _forEach.CurrentDegreeOfParallelism);
+        }
+
+        class A { }
+
+        [TestMethod]
+        public async Task ReferenceSafety()
+        {
+            A a1 = new A();
+            A a2 = new A();
+            A a3 = new A();
+
+            HashSet<A> hs = new HashSet<A>();
+
+            await Builder
+                .For(new A[] { a1, a2, a3 })
+                .Each(async (T, token) =>
+                {
+                    await Task.Delay(100);
+
+                    lock (hs)
+                    {
+                        hs.Add(T);
+                    }
+                })
+                .WithInitialDegreeOfParallelism(100)
+                .Build()
+                .Run(CancellationToken.None);
+
+            Assert.AreEqual(3, hs.Count);
+            Assert.IsTrue(hs.Contains(a1));
+            Assert.IsTrue(hs.Contains(a2));
+            Assert.IsTrue(hs.Contains(a3));
         }
     }
 }

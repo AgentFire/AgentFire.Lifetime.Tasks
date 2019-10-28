@@ -184,7 +184,7 @@
             Thrown when: An exception occurs on your processor method and: Either (1) your ExceptionHandler throws an exception, or (2) you did not provide ExceptionHandler.
             </exception>
             <exception cref="T:System.OperationCanceledException">
-            Thrown when: your <see cref="T:System.Threading.CancellationToken"/> is triggered..
+            Thrown when: your <see cref="T:System.Threading.CancellationToken"/> is triggered.
             </exception>
             <exception cref="T:System.InvalidOperationException">
             Thrown when: you attempt to run this method in parallel.

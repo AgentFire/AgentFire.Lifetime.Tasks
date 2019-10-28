@@ -9,8 +9,8 @@
     <RepositoryUrl>https://github.com/AgentFire/AgentFire.Lifetime.Tasks</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
     <PackageTags>tasks agentfire concurrent foreach</PackageTags>
-    <PackageReleaseNotes>More XML comments, some comfy things.</PackageReleaseNotes>
-    <Version>1.1</Version>
+    <PackageReleaseNotes>Fixed cancellation.</PackageReleaseNotes>
+    <Version>1.2</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

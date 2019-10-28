@@ -147,7 +147,7 @@ namespace AgentFire.Lifetime.Tasks
         /// Thrown when: An exception occurs on your processor method and: Either (1) your ExceptionHandler throws an exception, or (2) you did not provide ExceptionHandler.
         /// </exception>
         /// <exception cref="OperationCanceledException">
-        /// Thrown when: your <see cref="CancellationToken"/> is triggered..
+        /// Thrown when: your <see cref="CancellationToken"/> is triggered.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// Thrown when: you attempt to run this method in parallel.
@@ -178,6 +178,7 @@ namespace AgentFire.Lifetime.Tasks
 
                 foreach (T item in _collection)
                 {
+                    //T itemCopy = item;
                     IDisposable gateReleaser = await _gate.WaitAsync(token).ConfigureAwait(false);
 
                     WorkItem workItem = new WorkItem
@@ -350,9 +351,9 @@ namespace AgentFire.Lifetime.Tasks
             {
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
-                using (token.Register(() => tcs.SetCanceled()))
+                using (token.Register(() => tcs.TrySetCanceled(token)))
                 {
-                    await Task.WhenAny(Task.WhenAll(tasksLeft), tcs.Task).ConfigureAwait(false);
+                    await await Task.WhenAny(Task.WhenAll(tasksLeft), tcs.Task).ConfigureAwait(false);
                 }
             }
         }
