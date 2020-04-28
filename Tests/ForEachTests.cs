@@ -78,9 +78,10 @@ namespace Tests
                 .For(new int[] { 1, 2, 3, 4, 5 })
                 .Each(async (T, token) =>
                 {
+                    Interlocked.Increment(ref started);
+
                     try
                     {
-                        Interlocked.Increment(ref started);
                         await Task.Delay(1000, token);
                     }
                     finally
@@ -94,7 +95,7 @@ namespace Tests
                 .WhenException((_, ex) =>
                 {
                     Assert.Fail();
-                    throw new AssertFailedException();
+                    return ExceptionResolution.Abandon;
                 })
                 .Build();
 
@@ -111,12 +112,10 @@ namespace Tests
                 {
                     Assert.AreEqual(ex.CancellationToken, cts.Token);
                 }
-                catch (Exception)
-                {
-                    Assert.Fail();
-                }
             }
 
+            Assert.AreEqual(_forEach.CurrentDegreeOfParallelism, started);
+            await Task.Delay(1500);
             Assert.AreEqual(_forEach.CurrentDegreeOfParallelism, started);
         }
 
